@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sarcopenia Risk Assessment (SARC-F)</title>
+  <style>
+    :root {
+      --primary-teal: #008080;
+      --accent-orange: #FF8C00;
+      --muted-red: #B22222;
+      --moderate-amber: #CC7722;
+      --text-dark: #333;
+      --bg-light: #f9f9f9;
+      --border-radius: 4px;
+    }
+
+    #sarcopenia-tool {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 600px;
+      background: #fff;
+      padding: 25px;
+      border-left: 5px solid var(--primary-teal);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      color: var(--text-dark);
+      text-align: left;
+    }
+
+    h2 {
+      color: var(--primary-teal);
+      margin-top: 0;
+    }
+
+    p { line-height: 1.6; }
+
+    .question-block { margin-bottom: 20px; }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: var(--border-radius);
+      font-size: 16px;
+      background-color: #fff;
+      cursor: pointer;
+    }
+
+    select:focus {
+      outline: 2px solid var(--primary-teal);
+      outline-offset: 2px;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 12px 24px;
+      border: none;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background 0.2s, opacity 0.2s;
+    }
+
+    #calculate-btn {
+      background-color: var(--accent-orange);
+      color: #fff;
+    }
+
+    #calculate-btn:hover { background-color: #e67e00; }
+
+    #reset-btn {
+      background-color: #e0e0e0;
+      color: var(--text-dark);
+    }
+
+    #reset-btn:hover { background-color: #c8c8c8; }
+
+    /* Score bar */
+    .score-bar-wrapper {
+      margin: 16px 0 8px;
+    }
+
+    .score-bar-track {
+      background: #e0e0e0;
+      border-radius: 999px;
+      height: 12px;
+      overflow: hidden;
+    }
+
+    .score-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.5s ease;
+    }
+
+    .score-bar-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    /* Result area */
+    #result-area {
+      margin-top: 25px;
+      padding: 20px;
+      display: none;
+      border-radius: var(--border-radius);
+    }
+
+    #result-area h3 { margin-top: 0; }
+
+    .high-risk {
+      background-color: #fff0f0;
+      border: 1px solid var(--muted-red);
+    }
+
+    .moderate-risk {
+      background-color: #fff8ee;
+      border: 1px solid var(--moderate-amber);
+    }
+
+    .low-risk {
+      background-color: #f0fff4;
+      border: 1px solid var(--primary-teal);
+    }
+
+    .cta-button {
+      display: inline-block;
+      margin-top: 15px;
+      background-color: var(--primary-teal);
+      color: #fff;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: var(--border-radius);
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+
+    .cta-button:hover { background-color: #006666; }
+
+    .disclaimer {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #888;
+      border-top: 1px solid #eee;
+      padding-top: 12px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="sarcopenia-tool">
+  <h2>Sarcopenia Risk Assessment (SARC-F)</h2>
+  <p>
+    This validated screening tool helps identify age-related muscle loss.
+    Answer the 5 questions below to see your risk level.
+  </p>
+
+  <form id="sarc-form" novalidate>
+    <div class="question-block">
+      <label for="strength">1. Strength: How much difficulty do you have lifting and carrying 10 pounds?</label>
+      <select id="strength" name="strength" aria-required="true">
+        <option value="0">None</option>
+        <option value="1">Some</option>
+        <option value="2">A lot / Unable</option>
+      </select>
+    </div>
+
+    <div class="question-block">
+      <label for="walking">2. Assistance in Walking: How much difficulty do you have walking across a room?</label>
+      <select id="walking" name="walking" aria-required="true">
+        <option value="0">None</option>
+        <option value="1">Some</option>
+        <option value="2">A lot / Use of aids / Unable</option>
+      </select>
+    </div>
+
+    <div class="question-block">
+      <label for="rise">3. Rise from a Chair: How much difficulty do you have rising from a chair or bed?</label>
+      <select id="rise" name="rise" aria-required="true">
+        <option value="0">None</option>
+        <option value="1">Some</option>
+        <option value="2">A lot / Unable without help</option>
+      </select>
+    </div>
+
+    <div class="question-block">
+      <label for="stairs">4. Climb Stairs: How much difficulty do you have climbing a flight of 10 stairs?</label>
+      <select id="stairs" name="stairs" aria-required="true">
+        <option value="0">None</option>
+        <option value="1">Some</option>
+        <option value="2">A lot / Unable</option>
+      </select>
+    </div>
+
+    <div class="question-block">
+      <label for="falls">5. Falls: How many times have you fallen in the past year?</label>
+      <select id="falls" name="falls" aria-required="true">
+        <option value="0">None</option>
+        <option value="1">1–3 falls</option>
+        <option value="2">4 or more falls</option>
+      </select>
+    </div>
+
+    <div class="button-row">
+      <button type="button" id="calculate-btn">Calculate My Score</button>
+      <button type="button" id="reset-btn" aria-label="Reset form and results">Reset</button>
+    </div>
+  </form>
+
+  <div id="result-area" role="region" aria-live="polite" aria-label="Assessment result">
+    <h3 id="result-title"></h3>
+
+    <div class="score-bar-wrapper" aria-hidden="true">
+      <div class="score-bar-track">
+        <div class="score-bar-fill" id="score-bar"></div>
+      </div>
+      <div class="score-bar-labels">
+        <span>0</span>
+        <span>Low</span>
+        <span>Moderate</span>
+        <span>High</span>
+        <span>10</span>
+      </div>
+    </div>
+
+    <p id="result-text"></p>
+    <a href="https://29againfitness.activehosted.com/f/YOUR_FORM_ID"
+       class="cta-button"
+       id="cta-link"
+       target="_blank"
+       rel="noopener noreferrer">Book a Discovery Call</a>
+  </div>
+
+  <p class="disclaimer">
+    This tool is for informational purposes only and does not constitute medical advice.
+    Please consult a qualified healthcare provider for a clinical assessment.
+  </p>
+</div>
+
+<script>
+  const FIELDS = ['strength', 'walking', 'rise', 'stairs', 'falls'];
+
+  const RISK_LEVELS = [
+    {
+      min: 0,
+      max: 0,
+      label: 'Low',
+      cssClass: 'low-risk',
+      color: 'var(--primary-teal)',
+      barColor: '#008080',
+      message:
+        'Your results suggest a low current risk for sarcopenia. ' +
+        'Now is the perfect time to focus on strength training to maintain ' +
+        'your bone density and joint health for the long term.',
+    },
+    {
+      min: 1,
+      max: 3,
+      label: 'Moderate',
+      cssClass: 'moderate-risk',
+      color: 'var(--moderate-amber)',
+      barColor: '#CC7722',
+      message:
+        'Your score indicates some early risk factors for sarcopenia. ' +
+        'Incorporating consistent resistance training and adequate protein intake ' +
+        'now can meaningfully slow muscle loss and protect your mobility.',
+    },
+    {
+      min: 4,
+      max: 10,
+      label: 'High',
+      cssClass: 'high-risk',
+      color: 'var(--muted-red)',
+      barColor: '#B22222',
+      message:
+        'A score of 4 or higher is a clinical indicator of sarcopenia risk. ' +
+        'This suggests you may be losing muscle mass faster than is optimal for your age. ' +
+        'Let\u2019s build a safe, science-based plan to reverse this decline.',
+    },
+  ];
+
+  function getRiskLevel(score) {
+    return RISK_LEVELS.find(({ min, max }) => score >= min && score <= max);
+  }
+
+  function calculateRisk() {
+    const score = FIELDS.reduce(
+      (sum, id) => sum + parseInt(document.getElementById(id).value, 10),
+      0
+    );
+
+    const risk = getRiskLevel(score);
+    const resultArea = document.getElementById('result-area');
+    const title = document.getElementById('result-title');
+    const text = document.getElementById('result-text');
+    const bar = document.getElementById('score-bar');
+
+    resultArea.className = risk.cssClass;
+    resultArea.style.display = 'block';
+
+    title.textContent = `Risk Level: ${risk.label} \u2014 Score ${score} / 10`;
+    title.style.color = risk.color;
+
+    text.textContent = risk.message;
+
+    // Animate score bar (score out of 10)
+    bar.style.width = `${score * 10}%`;
+    bar.style.backgroundColor = risk.barColor;
+
+    resultArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function resetForm() {
+    document.getElementById('sarc-form').reset();
+    const resultArea = document.getElementById('result-area');
+    resultArea.style.display = 'none';
+    resultArea.className = '';
+    document.getElementById('score-bar').style.width = '0%';
+  }
+
+  document.getElementById('calculate-btn').addEventListener('click', calculateRisk);
+  document.getElementById('reset-btn').addEventListener('click', resetForm);
+</script>
+
+</body>
+</html>
