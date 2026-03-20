@@ -158,6 +158,83 @@
       border-top: 1px solid #eee;
       padding-top: 12px;
     }
+
+    #feedback-btn {
+      background-color: #fff;
+      color: var(--primary-teal);
+      border: 2px solid var(--primary-teal);
+    }
+
+    #feedback-btn:hover { background-color: #f0f8f8; }
+
+    /* Feedback modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-box {
+      background: #fff;
+      border-radius: var(--border-radius);
+      padding: 24px;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-box h3 { margin-top: 0; color: var(--primary-teal); }
+
+    #feedback-text {
+      width: 100%;
+      height: 120px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: var(--border-radius);
+      font-size: 14px;
+      font-family: inherit;
+      resize: vertical;
+      box-sizing: border-box;
+      margin-top: 8px;
+    }
+
+    #feedback-text:focus {
+      outline: 2px solid var(--primary-teal);
+      outline-offset: 2px;
+    }
+
+    .modal-button-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      justify-content: flex-end;
+    }
+
+    #submit-feedback-btn {
+      background-color: var(--primary-teal);
+      color: #fff;
+    }
+
+    #submit-feedback-btn:hover { background-color: #006666; }
+
+    #close-feedback-btn {
+      background-color: #e0e0e0;
+      color: var(--text-dark);
+    }
+
+    #close-feedback-btn:hover { background-color: #c8c8c8; }
+
+    #feedback-thanks {
+      display: none;
+      text-align: center;
+      padding: 20px 0;
+      color: var(--primary-teal);
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -218,6 +295,7 @@
     <div class="button-row">
       <button type="button" id="calculate-btn">Calculate My Score</button>
       <button type="button" id="reset-btn" aria-label="Reset form and results">Reset</button>
+      <button type="button" id="feedback-btn" aria-label="Give feedback about this tool">Give Feedback</button>
     </div>
   </form>
 
@@ -251,90 +329,24 @@
   </p>
 </div>
 
-<script>
-  const FIELDS = ['strength', 'walking', 'rise', 'stairs', 'falls'];
+<div id="feedback-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="feedback-modal-title">
+  <div class="modal-box">
+    <h3 id="feedback-modal-title">Share Your Feedback</h3>
+    <div id="feedback-form-area">
+      <label for="feedback-text">How can we improve this tool?</label>
+      <textarea id="feedback-text" aria-label="Your feedback"></textarea>
+      <div class="modal-button-row">
+        <button type="button" id="close-feedback-btn">Cancel</button>
+        <button type="button" id="submit-feedback-btn">Send Feedback</button>
+      </div>
+    </div>
+    <div id="feedback-thanks">
+      <p>Thank you for your feedback!</p>
+    </div>
+  </div>
+</div>
 
-  const RISK_LEVELS = [
-    {
-      min: 0,
-      max: 0,
-      label: 'Low',
-      cssClass: 'low-risk',
-      color: 'var(--primary-teal)',
-      barColor: '#008080',
-      message:
-        'Your results suggest a low current risk for sarcopenia. ' +
-        'Now is the perfect time to focus on strength training to maintain ' +
-        'your bone density and joint health for the long term.',
-    },
-    {
-      min: 1,
-      max: 3,
-      label: 'Moderate',
-      cssClass: 'moderate-risk',
-      color: 'var(--moderate-amber)',
-      barColor: '#CC7722',
-      message:
-        'Your score indicates some early risk factors for sarcopenia. ' +
-        'Incorporating consistent resistance training and adequate protein intake ' +
-        'now can meaningfully slow muscle loss and protect your mobility.',
-    },
-    {
-      min: 4,
-      max: 10,
-      label: 'High',
-      cssClass: 'high-risk',
-      color: 'var(--muted-red)',
-      barColor: '#B22222',
-      message:
-        'A score of 4 or higher is a clinical indicator of sarcopenia risk. ' +
-        'This suggests you may be losing muscle mass faster than is optimal for your age. ' +
-        'Let\u2019s build a safe, science-based plan to reverse this decline.',
-    },
-  ];
-
-  function getRiskLevel(score) {
-    return RISK_LEVELS.find(({ min, max }) => score >= min && score <= max);
-  }
-
-  function calculateRisk() {
-    const score = FIELDS.reduce(
-      (sum, id) => sum + parseInt(document.getElementById(id).value, 10),
-      0
-    );
-
-    const risk = getRiskLevel(score);
-    const resultArea = document.getElementById('result-area');
-    const title = document.getElementById('result-title');
-    const text = document.getElementById('result-text');
-    const bar = document.getElementById('score-bar');
-
-    resultArea.className = risk.cssClass;
-    resultArea.style.display = 'block';
-
-    title.textContent = `Risk Level: ${risk.label} \u2014 Score ${score} / 10`;
-    title.style.color = risk.color;
-
-    text.textContent = risk.message;
-
-    // Animate score bar (score out of 10)
-    bar.style.width = `${score * 10}%`;
-    bar.style.backgroundColor = risk.barColor;
-
-    resultArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
-
-  function resetForm() {
-    document.getElementById('sarc-form').reset();
-    const resultArea = document.getElementById('result-area');
-    resultArea.style.display = 'none';
-    resultArea.className = '';
-    document.getElementById('score-bar').style.width = '0%';
-  }
-
-  document.getElementById('calculate-btn').addEventListener('click', calculateRisk);
-  document.getElementById('reset-btn').addEventListener('click', resetForm);
-</script>
+<script src="app.js"></script>
 
 </body>
 </html>
