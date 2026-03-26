@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "wordpress-mcp": {
+      "command": "npx",
+      "args": ["-y", "@automattic/mcp-wordpress-remote@latest"],
+      "env": {
+        "WP_API_URL": "https://29againfitness.com",
+        "JWT_TOKEN": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovLzI5YWdhaW5maXRuZXNzLmNvbSIsImlhdCI6MTc3NDU1NzIzMSwiZXhwIjoxNzc3MTQ5MjMxLCJ1c2VyX2lkIjoxLCJqdGkiOiJrUzdlUk9GamtLc2VYbHlWTmRaS0doR245YktZQmw1MSJ9.CgEBOKs4V1Op5HB54lmyyEl_8mkBPTbJ5iNk3Ttcx40"
+      }
+    }
+  }
+}
