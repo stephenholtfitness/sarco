@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The 2026 Muscle Rebuild Cohort | Muscle Rebuild Plan</title>
+  <style>
+    :root {
+      --primary: #0f766e;
+      --primary-dark: #0b5a54;
+      --accent: #ea580c;
+      --accent-dark: #c2410c;
+      --text: #1f2937;
+      --muted: #4b5563;
+      --light: #f8fafc;
+      --border: #e5e7eb;
+      --radius: 8px;
+      --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      --max-width: 980px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text);
+      line-height: 1.65;
+      background: #ffffff;
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .topbar {
+      background: var(--primary);
+      color: #fff;
+      padding: 14px 0;
+    }
+
+    .topbar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .timeline {
+      font-size: 14px;
+      opacity: 0.95;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0b5a54, #0f766e 65%, #15847a);
+      color: #fff;
+      padding: 72px 0 56px;
+    }
+
+    h1 {
+      font-size: clamp(30px, 5vw, 48px);
+      line-height: 1.15;
+      margin: 0 0 18px;
+      max-width: 900px;
+    }
+
+    .subheadline {
+      max-width: 760px;
+      font-size: clamp(17px, 2vw, 22px);
+      margin: 0;
+      opacity: 0.95;
+    }
+
+    .header-meta {
+      margin-top: 28px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    main {
+      padding: 56px 0 72px;
+    }
+
+    section {
+      margin-bottom: 42px;
+      scroll-margin-top: 20px;
+    }
+
+    h2 {
+      font-size: clamp(24px, 3.8vw, 34px);
+      color: var(--primary);
+      margin: 0 0 14px;
+    }
+
+    h3 {
+      margin: 0 0 10px;
+      color: var(--text);
+      font-size: 22px;
+    }
+
+    p { margin: 0 0 14px; color: var(--muted); }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--muted);
+    }
+
+    li { margin-bottom: 8px; }
+
+    .pricing .card {
+      border-top: 4px solid var(--primary);
+    }
+
+    .pricing strong {
+      display: block;
+      font-size: 28px;
+      color: var(--text);
+      margin-top: 6px;
+    }
+
+    .callout {
+      border-left: 5px solid var(--accent);
+      background: #fff7ed;
+      padding: 16px 20px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      color: #7c2d12;
+      margin-top: 18px;
+    }
+
+    .credentials {
+      background: var(--light);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+    }
+
+    .faq details {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      background: #fff;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    form {
+      margin-top: 18px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    label {
+      font-weight: 600;
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    input, select, textarea {
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 10px 12px;
+      font: inherit;
+    }
+
+    textarea { min-height: 100px; resize: vertical; }
+
+    .btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 14px 24px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn:hover,
+    .btn:focus-visible { background: var(--accent-dark); }
+
+    .note {
+      margin-top: 14px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="container">
+      <a class="brand" href="/">Muscle Rebuild Plan</a>
+      <div class="timeline">Applications open April 27, 2026 • Close May 22, 2026</div>
+    </div>
+  </div>
+
+  <header>
+    <div class="container">
+      <h1>The 2026 Muscle Rebuild Cohort for Active Women Over 50</h1>
+      <p class="subheadline">A 3-month coaching plan for women who want to rebuild strength and muscle with structure, progression, and joint-aware programming.</p>
+      <div class="header-meta">
+        <div class="pill">Coaching starts Monday, June 1, 2026</div>
+        <div class="pill">Program length: 3 months</div>
+        <div class="pill">8 to 12 spots available</div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <section>
+        <h2>Who it's for</h2>
+        <p>This cohort is designed for active women over 50 who want expert coaching, clear structure, and measurable progress without guessing what to do next.</p>
+        <ul>
+          <li>You want a plan tailored to your current training level.</li>
+          <li>You value consistency and are ready to commit for 3 months.</li>
+          <li>You want strength and muscle gains with joint-aware progression.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>What problem this solves</h2>
+        <p>Most women in this stage are trying hard but not seeing the strength, muscle, or confidence gains they expect. The cohort gives you progression, accountability, and coaching so your effort creates visible results.</p>
+      </section>
+
+      <section>
+        <h2>What's included</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Structured Training</h3>
+            <p>Joint-aware, progressive programming designed to rebuild strength safely and sustainably.</p>
+          </div>
+          <div class="card">
+            <h3>Nutrition Coaching</h3>
+            <p>Nutrition guidance focused on muscle support, recovery, and practical routines that fit real life.</p>
+          </div>
+          <div class="card">
+            <h3>Coach Support</h3>
+            <p>Ongoing feedback, accountability, and coaching to keep momentum high for the full 3 months.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Why 3 months</h2>
+        <p>Three months is long enough to build momentum, improve movement quality, and see meaningful strength and body-composition change. It's also short enough to stay focused and committed from day one.</p>
+      </section>
+
+      <section class="pricing">
+        <h2>Pricing</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Training + Nutrition Coaching</h3>
+            <strong>$799/month</strong>
+            <p>for 3 months</p>
+          </div>
+          <div class="card">
+            <h3>Training Coaching</h3>
+            <strong>$599/month</strong>
+            <p>for 3 months</p>
+          </div>
+          <div class="card">
+            <h3>Nutrition Coaching</h3>
+            <strong>$349/month</strong>
+            <p>for 3 months</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Who it's not for</h2>
+        <ul>
+          <li>Anyone looking for a quick fix or a one-week reset.</li>
+          <li>Anyone unable to commit to 3 months of coaching.</li>
+          <li>Anyone who does not want to follow structured progression.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Your credentials</h2>
+        <div class="credentials">
+          <p>Your coaching combines practical muscle-rebuild strategy, age-aware progression, and accountability tailored for women over 50.</p>
+          <p class="callout"><strong>2026 IDEA® Personal Trainer of the Year:</strong> Recognized for excellence in coaching and client outcomes.</p>
+        </div>
+      </section>
+
+      <section class="faq">
+        <h2>FAQ</h2>
+        <details>
+          <summary>How many spots are available?</summary>
+          <p>There are 8 to 12 spots in this cohort so coaching stays personalized.</p>
+        </details>
+        <details>
+          <summary>When does coaching start?</summary>
+          <p>Coaching begins on Monday, June 1, 2026.</p>
+        </details>
+        <details>
+          <summary>Can I apply if I'm not sure which coaching option I need?</summary>
+          <p>Yes. Apply first and indicate your preferred option. You'll confirm fit during the Smart Start Screen process.</p>
+        </details>
+      </section>
+
+      <section id="apply">
+        <h2>Apply for the Smart Start Screen</h2>
+        <p>Complete this short application. After you apply, I'll review your answers and let you know if a Smart Start Screen makes sense.</p>
+
+        <form>
+          <div class="form-grid">
+            <div class="field">
+              <label for="age">Age</label>
+              <input id="age" name="age" type="number" min="18" required>
+            </div>
+            <div class="field">
+              <label for="goal">Primary goal</label>
+              <input id="goal" name="goal" type="text" required>
+            </div>
+            <div class="field">
+              <label for="routine">Current training routine</label>
+              <input id="routine" name="routine" type="text" required>
+            </div>
+            <div class="field">
+              <label for="frustration">Biggest frustration</label>
+              <input id="frustration" name="frustration" type="text" required>
+            </div>
+            <div class="field">
+              <label for="joint-history">Joint history or past injuries</label>
+              <input id="joint-history" name="joint_history" type="text" required>
+            </div>
+            <div class="field">
+              <label for="equipment">Equipment access</label>
+              <input id="equipment" name="equipment" type="text" required>
+            </div>
+            <div class="field">
+              <label for="commitment">Are you willing to commit to 3 months?</label>
+              <select id="commitment" name="commitment" required>
+                <option value="">Select one</option>
+                <option>Yes</option>
+                <option>No</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="option">Which option are you considering?</label>
+              <select id="option" name="option" required>
+                <option value="">Select one</option>
+                <option>Training + Nutrition Coaching ($799/month)</option>
+                <option>Training Coaching ($599/month)</option>
+                <option>Nutrition Coaching ($349/month)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="apply-now">What made you apply now?</label>
+            <textarea id="apply-now" name="apply_now" required></textarea>
+          </div>
+
+          <button class="btn" type="submit">Apply for the Smart Start Screen</button>
+          <p class="note">By applying, you agree to be contacted about cohort fit and next steps.</p>
+        </form>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
